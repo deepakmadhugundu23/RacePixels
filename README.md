@@ -9,7 +9,11 @@ This racepixels can turn a boring image into an colorful image by racing and com
 3. Create your own input.bmp with your own design in your mind. Add some color seeds.
 4. Run the main.py and it will generate the output.bmp
 5. Just enjoy the output.
+
+**Additional Features**
+1.The movement of pixels will be displayed in the terminal
+
 ---
-**Credits to Honza**
+**All credits to Honza**
 
 **Note**: This is for audience only in Code Buddies and GitCoding Arena server.
