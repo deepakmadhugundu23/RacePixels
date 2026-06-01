@@ -5,7 +5,7 @@ from PIL import Image
 image = Image.open("input.bmp").convert("RGB")
 data = np.array(image)
 
-def growpixels(grid):
+def racepixels(grid):
     newgrid = grid.copy()
     rows, cols, channels = grid.shape
 
@@ -22,7 +22,7 @@ def growpixels(grid):
     return newgrid 
 
 for _ in range(200):
-    data = growpixels(data)
+    data = racepixels(data)
 
 resultimage = Image.fromarray(data)
 resultimage.save("output.bmp")
