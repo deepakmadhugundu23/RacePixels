@@ -11,6 +11,7 @@ This racepixels can turn a boring image into an colorful image by racing and com
 5. Just enjoy the output.
 
 **Additional Features**
+
 1.The movement of pixels will be displayed in the terminal
 
 ---
