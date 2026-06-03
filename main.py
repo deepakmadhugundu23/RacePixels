@@ -8,18 +8,28 @@ init(autoreset=True)
 image = Image.open("input.bmp").convert("RGB")
 data = np.array(image)
 
-def growpixels(grid):
+def racepixels(grid):
     newgrid = grid.copy()
     rows, cols, _ = grid.shape
-    coords = [(r, c) for r in range(1, rows-1) for c in range(1, cols-1)]
-    random.shuffle(coords)
-    for r, c in coords:
-        if (grid[r, c] == [255, 255, 255]).all():
-            neighbors = [grid[r-1, c], grid[r+1, c], grid[r, c-1], grid[r, c+1]]
-            for n in neighbors:
-                if not (n == [255, 255, 255]).all() and not (n == [0, 0, 0]).all():
-                    newgrid[r, c] = n
-                    break
+    
+    white_pixels = np.argwhere((grid == [255, 255, 255]).all(axis=2))
+    np.random.shuffle(white_pixels)
+    
+    for r, c in white_pixels:
+        potential_neighbors = []
+        if r > 0: potential_neighbors.append(grid[r-1, c])
+        if r < rows-1: potential_neighbors.append(grid[r+1, c])
+        if c > 0: potential_neighbors.append(grid[r, c-1])
+        if c < cols-1: potential_neighbors.append(grid[r, c+1])
+        
+        for n in potential_neighbors:
+            n = np.array(n)
+            is_white = (n == [255, 255, 255]).all()
+            is_wall = (n == [0, 0, 0]).all()
+            
+            if not is_white and not is_wall:
+                newgrid[r, c] = n
+                break
     return newgrid
 
 PIXEL = "█"
@@ -38,12 +48,17 @@ def printgrid(grid):
 
 sys.stdout.write("\033[2J")
 
-for _ in range(200):
-    data = growpixels(data)
+iteration = 0
+while True:
+    olddata = data.copy()
+    data = racepixels(data)
     printgrid(data)
+    
+    if np.array_equal(data, olddata):
+        finalimage = Image.fromarray(data)
+        finalimage.save("output.bmp")
+        print(f"out.bmp created after {iteration} iterations")
+        break
+    
+    iteration += 1
     time.sleep(0.05)
-
-data[(data == [255, 255, 255]).all(axis=2)] = [0, 0, 255]
-
-Image.fromarray(data).save("output.bmp")
-print("check output.bmp")
