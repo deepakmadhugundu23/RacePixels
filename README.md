@@ -15,6 +15,4 @@ This racepixels can turn a boring image into an colorful image by racing and com
 1.The movement of pixels will be displayed in the terminal
 
 ---
-**All credits to Honza**
-
 **Note**: This is for audience only in Code Buddies and GitCoding Arena server.
